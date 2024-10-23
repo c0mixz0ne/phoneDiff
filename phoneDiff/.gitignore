@@ -28,3 +28,13 @@ coverage
 *.sw?
 
 *.tsbuildinfo
+
+# Source maps
+/src/**/*.js
+/src/**/*.js.map
+
+# Mac generate
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store

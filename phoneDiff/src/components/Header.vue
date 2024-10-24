@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { RouterLink } from 'vue-router'
+  import IconLogin from './icons/IconLogin.vue';
 </script>
 <template>
   <header class="header">
@@ -13,6 +14,7 @@
         </RouterLink>
         <RouterLink to="/login">
           Личный кабинет
+          <IconLogin/>
         </RouterLink>
       </nav>
     </div>

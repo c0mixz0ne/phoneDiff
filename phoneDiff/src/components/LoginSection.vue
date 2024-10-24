@@ -1,7 +1,7 @@
 <template>
-  <section>
+  <section class="login">
     <div class="container">
-      This is an login section
+      This is a login section
     </div>
   </section>
 </template>

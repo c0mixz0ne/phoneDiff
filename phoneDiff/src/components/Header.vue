@@ -5,16 +5,16 @@
 <template>
   <header class="header">
     <div class="container">
-      <RouterLink to="/">
+      <span class="title">
         Каталог
-      </RouterLink>
-      <nav>
-        <RouterLink to="/">
+      </span>
+      <nav class="nav">
+        <RouterLink class="link" to="/">
           Сравнение
         </RouterLink>
-        <RouterLink to="/login">
+        <RouterLink class="link" to="/login">
           Личный кабинет
-          <IconLogin/>
+          <IconLogin />
         </RouterLink>
       </nav>
     </div>

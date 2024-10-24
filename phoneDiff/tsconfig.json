@@ -3,24 +3,22 @@
     "module": "ESNext",
 		"moduleResolution": "node",
 		"target": "ESNext",
-		"sourceMap": true,
-		"strict": true,
+		// "strict": true,
 		"lib": [
 			"DOM",
 			"ESNext"
 		],
 		"esModuleInterop": true,
-		"noImplicitAny": true,
+		// "noImplicitAny": true,
 		"noEmitOnError": true,
   },
   "include": [
-    "src",
+    "src/**/*",
     "env.d.ts"
   ],
   "exclude": [
     ".vscode",
     "node_modules",
     "public"
-  ],
-  "compileOnSave": false
+  ]
 }

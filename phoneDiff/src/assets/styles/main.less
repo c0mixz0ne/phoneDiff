@@ -1,9 +1,118 @@
 @import './base.less';
 @import './vars.less';
+@import './fonts.less';
 
-body{
-    background-color: @body-bg-color;
-}
+//Header style
 header{
     background-color: @white;
+    border-bottom: 1px solid @nav-border-color;
+    .container{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 40px;
+        padding-bottom: 40px;
+    }
+    .title{
+        color: @blue-text-color;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 900;
+        line-height: normal;
+        letter-spacing: 0.9px;
+    }
+    .nav{
+        align-self: flex-end;
+        display: flex;
+        align-items: center;
+
+        .link{
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+
+            color: @nav-text-color;
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 900;
+            line-height: normal;
+            letter-spacing: 0.24px;
+            text-decoration: none;
+            
+            .login{
+                margin-left: 19px;
+            }
+
+            margin-right: 48px;
+            &:first-of-type{
+                text-transform: uppercase;
+                letter-spacing: unset;
+            }
+            &:last-of-type{
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+// Main style
+.difference{
+    .title-wrapper{
+        .container{
+            display: flex;
+            flex-direction: column; 
+        }
+
+        background-color: @white;
+        padding-top: 60px;
+        padding-bottom: 245px;
+        .title{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 20px;
+            h1{
+                color: @h1-color;
+                font-size: 48px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: 60px;
+                letter-spacing: 0.96px;
+            }
+            .product-counter{
+                color: @blue-text-color;
+                display: flex;
+                font-size: 18px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 60px; /* 333.333% */
+                letter-spacing: 0.36px;
+                .counter-items{
+                    button{
+                        color: inherit;
+                        background-color: transparent;
+                        border: 0;
+                        cursor: pointer;
+                        margin: 0;
+                        padding: 0 5px;
+                    }
+                    .active{
+                        text-decoration: underline;
+                    }
+                }
+            }
+        }
+    }
+    .content-wrapper{
+        margin-top: -245px;
+    }
+
+}
+
+.login{
+    .container{
+        display: flex;
+        padding-top: 50px;
+        padding-bottom: 50px;
+    }
 }

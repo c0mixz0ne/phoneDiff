@@ -57,6 +57,7 @@ header{
 
 // Main style
 .difference{
+    padding-bottom: 91px;
     .title-wrapper{
         .container{
             display: flex;
@@ -104,7 +105,59 @@ header{
         }
     }
     .content-wrapper{
-        margin-top: -245px;
+        margin-top: -245px; // ¯_(ツ)_/¯
+        .phone-table{
+            display: block; 
+            // width: 100%; 
+            margin: 0 auto; 
+            overflow-x: auto;
+            white-space: nowrap;
+            border-collapse: collapse;
+            thead{
+                display: block;
+                tr{
+                    th{
+                        &:first-child{
+                            label{
+                                color: @blue-text-color;
+                                margin-left: 15px;
+                                cursor: pointer;
+                            }
+                        }
+                        min-width: @table-column-width;
+                        height: @table-thead-height;
+                        text-align-last: left;
+                    }
+                }
+            }
+            tbody{
+                display: block;
+                tr{
+                    border-top: 1px solid @table-border-color;
+                    display: table;
+                    min-width: 100%;
+                    td{
+                        display: inline-block;
+                        &:first-child{
+                            color: @second-text-color;
+                            font-size: 18px;
+                            font-style: normal;
+                            font-weight: 500;
+                            line-height: normal;
+                            text-transform: uppercase;
+                        }
+                        min-width: @table-column-width;
+                        max-width: @table-column-width;
+                        white-space: normal;
+                        padding: 30px 0;
+
+                    }
+                }
+                &:last-child{
+                    border-bottom: 1px solid @table-border-color;
+                }
+            }
+        }
     }
 
 }

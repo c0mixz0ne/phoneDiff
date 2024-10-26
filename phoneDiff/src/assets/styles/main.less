@@ -2,7 +2,7 @@
 @import './vars.less';
 @import './fonts.less';
 
-//Header style
+// Header
 header{
     background-color: @white;
     border-bottom: 1px solid @nav-border-color;
@@ -55,7 +55,7 @@ header{
     }
 }
 
-// Main style
+// Difference
 .difference{
     padding-bottom: 91px;
     .title-wrapper{
@@ -80,7 +80,7 @@ header{
                 line-height: 60px;
                 letter-spacing: 0.96px;
             }
-            .product-counter{
+            .product-show{
                 color: @blue-text-color;
                 display: flex;
                 font-size: 18px;
@@ -88,7 +88,7 @@ header{
                 font-weight: 400;
                 line-height: 60px; /* 333.333% */
                 letter-spacing: 0.36px;
-                .counter-items{
+                .show-items{
                     button{
                         color: inherit;
                         background-color: transparent;
@@ -106,6 +106,9 @@ header{
     }
     .content-wrapper{
         margin-top: -245px; // ¯_(ツ)_/¯
+        .container{
+            padding: 0;
+        }
         .phone-table{
             display: block; 
             // width: 100%; 
@@ -113,6 +116,96 @@ header{
             overflow-x: auto;
             white-space: nowrap;
             border-collapse: collapse;
+            .product{
+                position: relative;
+                .product-image{
+                    height: 120px;
+                    // display: block;
+                    vertical-align: middle;
+                }
+                .product-title{
+                    display: block;
+                    margin-top: 10px;
+                }
+                .product-changer{
+                    background-color: transparent;
+                    border: none;
+                    padding: 0;
+                    margin: 0;
+                    display: block;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    cursor: pointer;
+
+                    svg{
+                        transition: .2s ease;
+                        vertical-align: middle;
+                    }
+                    &.active{
+                        svg{
+                            transform: rotate(180deg);
+                        }
+
+                    }
+                }
+                .product-modal{
+                  position: absolute;
+                  width: calc(@table-column-width + calc(@table-column-width / 2));
+                  top: 50%;
+                  left: 50%;
+                  transform: translateY(30px) translateX(-50%);
+                  background-color: @white;
+                  border-radius: 4px;
+                  box-shadow: 0px 16px 32px 0px rgba(35, 39, 51, 0.10);
+                  z-index: 1;
+                  border: 1px solid @modal-border-color;
+                  padding:34px 18px;
+                  input::-webkit-input-placeholder{
+                    color:lightgray;
+                  }
+                  input{
+                    width:100%;
+                    font-size: 24px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    color: @black;
+                    border-radius: 4px;
+                    border: 1px solid @modal-border-color;
+                    padding: 10px 16px;
+                    display: block;
+                    margin-bottom: 15px;
+                  }
+                  .other-products{
+                    max-height: 211px;
+                    overflow: auto;
+                    .product{
+                      display: flex;
+                      align-items: center;
+                      margin-bottom: 30px;
+                      &:last-child{
+                        margin-bottom: 0;
+                      }
+                      .change-button{
+                        background-color: transparent;
+                        border:none;
+                        cursor: pointer;
+                        svg{
+                          vertical-align: middle;
+                          margin-right: 18px;
+                        }
+                      }
+                      .image-modal{
+                        height: 50px;
+                        margin-right: 18px;
+                      }
+                    }
+                  }
+
+                }
+            }
             thead{
                 display: block;
                 tr{
@@ -162,6 +255,7 @@ header{
 
 }
 
+// Login
 .login{
     .container{
         display: flex;

@@ -1,6 +1,8 @@
 <script lang="ts">
-import { log } from 'console'
-import ProductCounter from '../components/ProductCounter.vue'
+import ProductShow from '../components/ProductShow.vue'
+
+import IconChevron from './icons/IconChevron.vue';
+import IconChange from './icons/IconChange.vue';
 
 import { onMounted, computed, ref } from 'vue'
 import { useStore } from 'vuex'
@@ -10,27 +12,32 @@ export default {
     const store = useStore()
     const differences = ref({})
     const show = ref(true)
+    const activeButton = ref()
 
     onMounted(() => {
       store.dispatch('loadProducts')
     })
 
     const products = computed(() => store.getters.allProducts)
-    console.log(products);
-    
-    const startShow = computed(() => store.getters.currentCount)
-    // console.log(differences);
+    const startShow = computed(() => store.getters.currentShow)
+
+    console.log(differences);
+
     return {
       products,
       startShow,
       differences,
       show,
+      activeButton
+      // activeChanger
     }
-    
+
   },
 
   components: {
-    ProductCounter,
+    ProductShow,
+    IconChevron,
+    IconChange,
   },
 
   methods: {
@@ -42,19 +49,61 @@ export default {
       // Сравниваем свойства всех продуктов
       keys.forEach(key => {
         const values = this.products.map(product => product[key])
-        
+
         const uniqueValues = [...new Set(values)]
-        
+
         if (uniqueValues.length > 1) {
           this.differences[key] = values
         }
       })
 
-      console.log(this.differences);
-      
+      console.log(this.differences, this.products);
+
       return this.differences
     },
+
+    openModal(index){
+      if (index === this.activeButton){
+        this.activeButton = '';
+        return;
+      }
+
+      this.activeButton = index;
+      console.log(this.activeButton);
+    },
+
+    changeProduct(index){
+      // console.log(index, this.products, this.activeButton);
+      console.log(`Этот ${this.activeButton} ,На этот ${index}`);
+
+
+      console.log(this.products);
+
+      // this.activeButton = index;
+      // console.log(this.products.find(item => item.id === this.activeButton));
+
+
+      this.elementSwap(this.products, index, this.activeButton);
+      this.activeButton = '';
+    },
+
+    elementSwap(products, a, b){
+
+      const replaceable = products.findIndex(item => item.id === a); // Заменяющий
+      const replacing = products.findIndex(item => item.id === b); // Заменяемый
+
+      if (replaceable !== -1 && replacing !== -1) {
+        // Обмен значениями объектов
+        [products[replaceable], products[replacing]] = [products[replacing], products[replaceable]];
+        // console.log('Обмен завершен:', products);
+      } else {
+        // console.log('Один из ID не найден');
+      }
+
+    }
+
   },
+
 }
 </script>
 
@@ -64,7 +113,7 @@ export default {
       <div class="container">
         <div class="title">
           <h1>Смартфоны</h1>
-          <ProductCounter />
+          <ProductShow />
         </div>
       </div>
     </div>
@@ -82,10 +131,50 @@ export default {
                 <label for="show-diff">Показать различия</label>
               </th>
               <th
+                class="product"
                 v-for="(product, index) in products.slice(0, startShow)"
                 :key="index"
               >
-                {{ product.name }}
+                <img class="product-image" :src="`/data/photo/`+ product.photo" alt="Фото">
+                <span class="product-title">{{ product.name }} </span>
+                <!-- <span
+                  v-if="startShow === 6"
+                  class="all"
+                  >
+                  Отображены все устройства
+                </span> -->
+                <button
+                  :key="index"
+                  @click="openModal(product.id)"
+                  :class="{ 'active': activeButton === product.id }"
+                  v-if="startShow !== 6"
+                  class="product-changer"
+                  >
+                  <IconChevron />
+                </button>
+                <div
+                v-show="activeButton === product.id"
+                class="product-modal"
+                v-if="startShow !== 6"
+                >
+                  <input placeholder="Поиск" type="text">
+                  <div class="other-products">
+                    <div
+                    class="product"
+                    v-for="(product, index) in products.slice(startShow)"
+                    :key="index"
+                    >
+                      <button
+                      class="change-button"
+                      @click="changeProduct(product.id)"
+                      >
+                        <IconChange />
+                      </button>
+                      <img class="image-modal" :src="`/data/photo/`+ product.photo" alt="Фото">
+                      <span>{{ product.name }}</span>
+                    </div>
+                  </div>
+                </div>
               </th>
             </tr>
           </thead>

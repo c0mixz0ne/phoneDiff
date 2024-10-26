@@ -5,10 +5,10 @@ import { useStore, mapActions } from 'vuex'
 export default {
   setup() {
     const store = useStore()
-    const startShow = computed(() => store.getters.currentCount)
+    const show = computed(() => store.getters.currentShow)
 
     return {
-        startShow
+        show
     }
   },
   data() {
@@ -24,23 +24,23 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateCount']),
-    changeCount(e) {
-      this.updateCount(Number(e.target.id))
+    ...mapActions(['updateShow']),
+    changeShow(e) {
+      this.updateShow(Number(e.target.id))
     },
   },
 }
 </script>
 <template>
-  <div class="product-counter">
+  <div class="product-show">
     <span> Отобразить товары: </span>
-    <div class="counter-items">
+    <div class="show-items">
       <button
-        @click="changeCount"
+        @click="changeShow"
         v-for="index in buttonsRange"
         :key="index"
-        :class="{ active: startShow - 1 === index }"
-        :id="startPosition + index - 1"
+        :class="{ active: show - 1 === index }"
+        :id="String(startPosition + index - 1)"
       >
         {{ startPosition + index - 1 }}
       </button>

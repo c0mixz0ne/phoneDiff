@@ -1,30 +1,30 @@
 import { createStore } from 'vuex';
-import phones from '../../public/data/phones.json'; 
+import phones from '../../public/data/phones.json';
 
 const store = createStore({
   state: {
     products: [],
-    count: 3,
+    show: 3,
   },
   mutations: {
     SET_PRODUCTS(state, products) {
       state.products = products;
     },
-    UPDATE_COUNT(state, newCount){
-      state.count = newCount;
+    UPDATE_SHOW(state, newShow){
+      state.show = newShow;
     }
   },
   actions: {
     loadProducts({ commit }) {
       commit('SET_PRODUCTS', phones.products);
     },
-    updateCount({ commit }, newCount) {
-      commit('UPDATE_COUNT', newCount);
+    updateShow({ commit }, newShow) {
+      commit('UPDATE_SHOW', newShow);
     }
   },
   getters: {
     allProducts: (state) => state.products,
-    currentCount: (state) => state.count,
+    currentShow: (state) => state.show,
   }
 });
 

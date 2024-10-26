@@ -12,7 +12,8 @@ export default {
     const store = useStore()
     const differences = ref({})
     const show = ref(true)
-    const activeButton = ref()
+    const activeButton = ref('')
+    const inputData = ref('')
 
     onMounted(() => {
       store.dispatch('loadProducts')
@@ -21,14 +22,15 @@ export default {
     const products = computed(() => store.getters.allProducts)
     const startShow = computed(() => store.getters.currentShow)
 
-    console.log(differences);
+    // console.log(differences);
 
     return {
       products,
       startShow,
       differences,
       show,
-      activeButton
+      activeButton,
+      inputData
       // activeChanger
     }
 
@@ -57,53 +59,58 @@ export default {
         }
       })
 
-      console.log(this.differences, this.products);
+      console.log(this.differences, this.products)
 
       return this.differences
     },
 
     openModal(index){
       if (index === this.activeButton){
-        this.activeButton = '';
-        return;
+        this.activeButton = ''
+        return
       }
 
-      this.activeButton = index;
-      console.log(this.activeButton);
+      this.activeButton = index
+      console.log(this.activeButton)
     },
 
     changeProduct(index){
-      // console.log(index, this.products, this.activeButton);
-      console.log(`Этот ${this.activeButton} ,На этот ${index}`);
-
-
-      console.log(this.products);
-
-      // this.activeButton = index;
-      // console.log(this.products.find(item => item.id === this.activeButton));
-
-
-      this.elementSwap(this.products, index, this.activeButton);
-      this.activeButton = '';
+      this.productSwap(this.products, index, this.activeButton)
+      this.activeButton = ''
     },
 
-    elementSwap(products, a, b){
+    productSwap(products, a, b){
 
-      const replaceable = products.findIndex(item => item.id === a); // Заменяющий
-      const replacing = products.findIndex(item => item.id === b); // Заменяемый
+      const replaceable = products.findIndex(item => item.id === a) // Заменяющий
+      const replacing = products.findIndex(item => item.id === b) // Заменяемый
 
       if (replaceable !== -1 && replacing !== -1) {
-        // Обмен значениями объектов
-        [products[replaceable], products[replacing]] = [products[replacing], products[replaceable]];
-        // console.log('Обмен завершен:', products);
+        [products[replaceable], products[replacing]] = [products[replacing], products[replaceable]]
+
       } else {
-        // console.log('Один из ID не найден');
+          throw new Error("Один из ID не найден")
       }
+    },
 
+    inputShow(e){
+      this.inputData = e.target.value.toLowerCase()
+
+      for (const product of e.target.nextSibling.children) {
+
+        if (this.inputData === '') {
+          product.classList.remove('filtered')
+        }
+
+        if (!product.querySelector('.name-modal').textContent.toLowerCase().includes(this.inputData)){
+          product.classList.add('filtered')
+        }
+
+        else {
+          product.classList.remove('filtered')
+        }
+      }
     }
-
   },
-
 }
 </script>
 
@@ -157,7 +164,7 @@ export default {
                 class="product-modal"
                 v-if="startShow !== 6"
                 >
-                  <input placeholder="Поиск" type="text">
+                  <input @input="inputShow" v-if="startShow < 3" placeholder="Поиск" type="text">
                   <div class="other-products">
                     <div
                     class="product"
@@ -171,7 +178,7 @@ export default {
                         <IconChange />
                       </button>
                       <img class="image-modal" :src="`/data/photo/`+ product.photo" alt="Фото">
-                      <span>{{ product.name }}</span>
+                      <span class="name-modal">{{ product.name }}</span>
                     </div>
                   </div>
                 </div>

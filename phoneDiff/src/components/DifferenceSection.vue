@@ -6,14 +6,16 @@ import IconChange from './icons/IconChange.vue'
 import IconCheck from './icons/IconCheck.vue'
 import IconCross from './icons/IconCross.vue'
 
-import { onMounted, computed, ref, onUnmounted } from 'vue'
+import { onMounted, computed, ref, onUnmounted, watch} from 'vue'
 import { useStore } from 'vuex'
+
+import {IProduct} from '../types/types'
 
 export default {
   setup() {
     const store = useStore()
     const differences = ref({})
-    const show = ref(true)
+    const showDifferences = ref(false)
     const inputData = ref('')
 
     onMounted(() => {
@@ -24,17 +26,44 @@ export default {
       store.dispatch('updateCurrentModal', '')
     })
 
-    const products = computed(() => store.getters.allProducts)
+    const products = computed<IProduct[]>(() => store.getters.allProducts)
     const startShow = computed(() => store.getters.currentShow)
     const currentModal = computed(() => store.getters.currentModal)
+
+    watch([startShow, currentModal], () => {
+      actionDiffirence();
+    });
+
+    const actionDiffirence = () => {
+
+      if(!showDifferences.value) return
+
+      differences.value = {}
+
+      const keys = Object.keys(products.value[0] || {})
+
+      // Сравниваем свойства всех продуктов
+      keys.forEach(key => {
+        const values = products.value.slice(0, startShow.value).map(product => product[key as keyof IProduct])
+
+        const uniqueValues = [...new Set(values)]
+
+        if (uniqueValues.length > 1) {
+          differences.value[key] = values
+        }
+      })
+
+      return differences.value
+    }
 
     return {
       products,
       startShow,
       differences,
-      show,
+      showDifferences,
       currentModal,
       inputData,
+      actionDiffirence
       // activeChanger
     }
   },
@@ -48,27 +77,6 @@ export default {
   },
 
   methods: {
-    showDiffirence() {
-      this.show = !this.show
-
-      const keys = Object.keys(this.products[0] || {})
-
-      // Сравниваем свойства всех продуктов
-      keys.forEach(key => {
-        const values = this.products.map(product => product[key])
-
-        const uniqueValues = [...new Set(values)]
-
-        if (uniqueValues.length > 1) {
-          this.differences[key] = values
-        }
-      })
-
-      console.log(this.differences, this.products)
-
-      return this.differences
-    },
-
     openModal(index) {
       if (index === this.currentModal) {
         this.$store.dispatch('updateCurrentModal', '')
@@ -88,13 +96,11 @@ export default {
       const replaceable = products.findIndex(item => item.id === a) // Заменяющий
       const replacing = products.findIndex(item => item.id === b) // Заменяемый
 
-      if (replaceable !== -1 && replacing !== -1) {
-        ;[products[replaceable], products[replacing]] = [
-          products[replacing],
-          products[replaceable],
-        ]
-      } else {
+      if (replaceable === -1 || replacing === -1) {
         throw new Error('Один из ID не найден')
+      }
+      else{
+        [ products[replaceable], products[replacing]] = [ products[replacing], products[replaceable] ]
       }
     },
 
@@ -129,7 +135,8 @@ export default {
             <tr>
               <th>
                 <input
-                  @change="showDiffirence"
+                  @change="actionDiffirence"
+                  v-model="showDifferences"
                   id="show-diff"
                   type="checkbox"
                 />
@@ -197,8 +204,9 @@ export default {
               </th>
             </tr>
           </thead>
+          <!-- Или в цикле -->
           <tbody>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.manufacturer">
               <td>производитель</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -207,7 +215,7 @@ export default {
                 {{ product.manufacturer }}
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.year">
               <td>год релиза</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -216,7 +224,7 @@ export default {
                 {{ product.year }}
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.diag">
               <td>диагональ экрана(дюйм)</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -225,7 +233,7 @@ export default {
                 {{ product.diag }}
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.country">
               <td>страна производитель</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -234,7 +242,7 @@ export default {
                 {{ product.country }}
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.memory">
               <td>объем памяти</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -243,7 +251,7 @@ export default {
                 {{ product.memory }}
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.hertz">
               <td>частота обновления экрана</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -252,7 +260,7 @@ export default {
                 {{ product.hertz }}
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.nfc">
               <td>nfc</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -262,7 +270,7 @@ export default {
                 <IconCross v-else />
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.esim">
               <td>поддержка esim</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -272,7 +280,7 @@ export default {
                 <IconCross v-else />
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.wlcharge">
               <td>поддержка безпроводной зарядки</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"
@@ -282,7 +290,7 @@ export default {
                 <IconCross v-else />
               </td>
             </tr>
-            <tr>
+            <tr v-show="!this.showDifferences || this.differences.price">
               <td>стоимость</td>
               <td
                 v-for="(product, index) in products.slice(0, startShow)"

@@ -2,7 +2,7 @@
     "products": [
       { "id": 0, "name": "Apple iPhone 12", "manufacturer": "Apple", "year": "2005", "diag": "5", "country": "Россия", "memory": "8 ГБ", "hertz": "50 ГЦ", "nfc": true, "esim": true, "wlcharge": true, "price": "10 000", "photo": "5.png"},
       { "id": 1, "name": "Xiaomi Mi 11 Lite", "manufacturer": "Apple", "year": "2006", "diag": "5.1", "country": "Россия", "memory": "16 ГБ", "hertz": "55 ГЦ", "nfc": true, "esim": true, "wlcharge": false, "price": "20 000", "photo": "6.png"},
-      { "id": 2, "name": "Samsung Galaxy A72", "manufacturer": "Apple", "year": "2007", "diag": "5.2", "country": "Россия", "memory": "32 ГБ", "hertz": "60 ГЦ", "nfc": false, "esim": false, "wlcharge": true, "price": "30 000", "photo": "7.png"},
+      { "id": 2, "name": "Samsung Galaxy A72", "manufacturer": "Sumsung", "year": "2007", "diag": "5.2", "country": "Россия", "memory": "32 ГБ", "hertz": "60 ГЦ", "nfc": false, "esim": false, "wlcharge": true, "price": "30 000", "photo": "7.png"},
       { "id": 3, "name": "Iphone 8", "manufacturer": "Apple", "year": "2008", "diag": "5.3", "country": "Россия", "memory": "64 ГБ", "hertz": "70 ГЦ", "nfc": true, "esim": true, "wlcharge": true, "price": "40 000", "photo": "8.png"},
       { "id": 4, "name": "Iphone 9", "manufacturer": "Apple", "year": "2009", "diag": "5.4", "country": "Россия", "memory": "128 ГБ", "hertz": "40 ГЦ", "nfc": false, "esim": true, "wlcharge": true, "price": "50 000", "photo": "9.png"},
       { "id": 5, "name": "Iphone 10", "manufacturer": "Apple", "year": "2010", "diag": "5.5", "country": "Россия", "memory": "256 ГБ", "hertz": "30 ГЦ", "nfc": true, "esim": true, "wlcharge": true, "price": "60 000", "photo": "10.png"}

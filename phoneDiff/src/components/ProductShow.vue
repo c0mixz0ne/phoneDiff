@@ -1,6 +1,6 @@
 <script lang="ts">
 import { computed } from 'vue'
-import { useStore, mapActions } from 'vuex'
+import { useStore } from 'vuex'
 
 export default {
   setup() {

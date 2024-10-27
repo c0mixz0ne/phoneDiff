@@ -48,7 +48,7 @@ export default {
   },
 
   methods: {
-    showDiffirence(e) {
+    showDiffirence() {
       this.show = !this.show
 
       const keys = Object.keys(this.products[0] || {})

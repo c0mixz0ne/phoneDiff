@@ -6,6 +6,7 @@ const store = createStore({
     products: [],
     show: 3, //Default
     currentModal: '', //Default
+    isMenuVisible: false,
   },
   mutations: {
     SET_PRODUCTS(state, products) {
@@ -16,6 +17,9 @@ const store = createStore({
     },
     UPDATE_CURRENT_MODAL(state, newCurrent) {
       state.currentModal = newCurrent
+    },
+    TOGGLE_MENU(state) {
+      state.isMenuVisible = !state.isMenuVisible
     },
   },
   actions: {
@@ -28,11 +32,15 @@ const store = createStore({
     updateCurrentModal({ commit }, newCurrent) {
       commit('UPDATE_CURRENT_MODAL', newCurrent)
     },
+    toggleMenu({ commit }) {
+      commit('TOGGLE_MENU')
+    },
   },
   getters: {
     allProducts: state => state.products,
     currentShow: state => state.show,
     currentModal: state => state.currentModal,
+    isMenuVisible: state => state.isMenuVisible,
   },
 })
 

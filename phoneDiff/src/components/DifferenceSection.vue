@@ -6,10 +6,10 @@ import IconChange from './icons/IconChange.vue'
 import IconCheck from './icons/IconCheck.vue'
 import IconCross from './icons/IconCross.vue'
 
-import { onMounted, computed, ref, onUnmounted, watch} from 'vue'
+import { onMounted, computed, ref, onUnmounted, watch } from 'vue'
 import { useStore } from 'vuex'
 
-import {IProduct} from '../types/types'
+import { IProduct } from '../types/types'
 
 export default {
   setup() {
@@ -31,12 +31,11 @@ export default {
     const currentModal = computed(() => store.getters.currentModal)
 
     watch([startShow, currentModal], () => {
-      actionDiffirence();
-    });
+      actionDiffirence()
+    })
 
     const actionDiffirence = () => {
-
-      if(!showDifferences.value) return
+      if (!showDifferences.value) return
 
       differences.value = {}
 
@@ -44,7 +43,9 @@ export default {
 
       // Сравниваем свойства всех продуктов
       keys.forEach(key => {
-        const values = products.value.slice(0, startShow.value).map(product => product[key as keyof IProduct])
+        const values = products.value
+          .slice(0, startShow.value)
+          .map(product => product[key as keyof IProduct])
 
         const uniqueValues = [...new Set(values)]
 
@@ -63,7 +64,7 @@ export default {
       showDifferences,
       currentModal,
       inputData,
-      actionDiffirence
+      actionDiffirence,
       // activeChanger
     }
   },
@@ -98,9 +99,11 @@ export default {
 
       if (replaceable === -1 || replacing === -1) {
         throw new Error('Один из ID не найден')
-      }
-      else{
-        [ products[replaceable], products[replacing]] = [ products[replacing], products[replaceable] ]
+      } else {
+        ;[products[replaceable], products[replacing]] = [
+          products[replacing],
+          products[replaceable],
+        ]
       }
     },
 
@@ -168,6 +171,7 @@ export default {
                 >
                   <IconChevron />
                 </button>
+                <!-- Здесь можно отрефакторить и сделать одну модалку в body или использовать teleport -->
                 <div
                   v-show="currentModal === product.id"
                   class="product-modal"

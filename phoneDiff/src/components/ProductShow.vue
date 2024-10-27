@@ -8,7 +8,7 @@ export default {
     const show = computed(() => store.getters.currentShow)
 
     return {
-        show
+      show,
     }
   },
   data() {
@@ -24,9 +24,9 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['updateShow']),
     changeShow(e) {
-      this.updateShow(Number(e.target.id))
+      this.$store.dispatch('updateShow', Number(e.target.id))
+      this.$store.dispatch('updateCurrentModal', '')
     },
   },
 }

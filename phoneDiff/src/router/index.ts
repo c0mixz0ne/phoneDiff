@@ -10,18 +10,18 @@ const router = createRouter({
       name: 'catalog',
       component: CatalogView,
       meta: {
-        title: 'Каталог : Сравнение'
-      }
+        title: 'Каталог : Сравнение',
+      },
     },
     {
       path: '/login',
       name: 'login',
       component: LoginView,
       meta: {
-        title: 'Каталог : Личный кабинет'
-      }
+        title: 'Каталог : Личный кабинет',
+      },
     },
-  ]
+  ],
 })
 
 export default router
